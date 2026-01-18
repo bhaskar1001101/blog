@@ -25,7 +25,7 @@
         <header class="post-header">
             <h1 class="post-title">hbm vs hbf</h1>
             <p class="post-date">January 18, 2026</p>
-            <div class="post-tags"><span class="tag "></span></div>
+            <div class="post-tags"><span class="tag rant">rant</span></div>
         </header>
         <div class="post-content">
             <h1>HBM vs HBF: The Diverging Future of Compute</h1>
@@ -56,11 +56,32 @@
 <p>HBF has a fundamental asymmetry: reads are fast, writes are slow and wear out the cells.</p>
 <p>NAND flash has a write endurance of roughly 100,000 cycles per cell. For inference workloads—where you're reading model weights repeatedly but rarely writing—this is fine. For training, where gradients flow backward through the entire model and update every parameter, it's a non-starter.</p>
 <p>This creates an interesting market segmentation:</p>
-<p>| | HBM | HBF |
-|---|---|---|
-| <strong>Strength</strong> | Symmetric R/W, lowest latency | Massive capacity, cost-efficient |
-| <strong>Weakness</strong> | Capacity-limited, expensive | Write endurance, higher latency |
-| <strong>Ideal for</strong> | Training, latency-critical inference | Large model inference, edge deployment |</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>HBM</th>
+<th>HBF</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Strength</strong></td>
+<td>Symmetric R/W, lowest latency</td>
+<td>Massive capacity, cost-efficient</td>
+</tr>
+<tr>
+<td><strong>Weakness</strong></td>
+<td>Capacity-limited, expensive</td>
+<td>Write endurance, higher latency</td>
+</tr>
+<tr>
+<td><strong>Ideal for</strong></td>
+<td>Training, latency-critical inference</td>
+<td>Large model inference, edge deployment</td>
+</tr>
+</tbody>
+</table>
 <h2>The Hybrid Future</h2>
 <p>The most likely architecture isn't HBM <em>or</em> HBF—it's both.</p>
 <p>Professor Joungho Kim at KAIST (the "father of HBM") proposed an architecture where 100GB of HBM acts as a caching layer in front of 1TB of HBF. Hot data (attention KV cache, frequently-accessed layers) lives in HBM. Cold data (rarely-touched model weights, long context) lives in HBF.</p>
