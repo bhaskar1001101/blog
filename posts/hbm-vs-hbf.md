@@ -1,0 +1,106 @@
+---
+title: hbm vs hbf
+date: 2026-01-18
+type: rant
+---
+
+# HBM vs HBF: The Diverging Future of Compute
+
+The semiconductor industry is experiencing a quiet schism. While everyone argues about GPU architectures and AI model scaling laws, the real constraint has always been memory bandwidth. And now, for the first time, we have two fundamentally different approaches to solving it.
+
+## The Problem: Von Neumann's Architecture
+
+Every compute architecture since the 1940s has faced the same fundamental bottleneck: processors are fast, memory is slow, and the bus between them is a traffic jam.
+
+For decades, we papered over this with caches—L1, L2, L3, each layer a compromise between speed and capacity. But AI workloads broke the cache hierarchy. When your model has 405 billion parameters and your context window holds 128k tokens, no cache is saving you. You're memory-bound, and the processor sits idle waiting for data.
+
+This is the "memory wall." It's not new. What's new is that we now have two competing solutions, and they represent genuinely different philosophies about what computing should look like.
+
+## HBM: Wider Roads, Taller Buildings
+
+High Bandwidth Memory is the incumbent solution. The core insight is elegant: instead of a narrow 64-bit memory bus, what if we had a 2048-bit bus? And instead of memory chips spread across a PCB, what if we stacked them vertically and connected them with thousands of through-silicon vias (TSVs)?
+
+The result is bandwidth that would have seemed impossible a decade ago. HBM3E delivers 1.28 TB/s per stack. HBM4, arriving now, doubles the interface width and pushes toward 2 TB/s. An NVIDIA Blackwell GPU with 8 HBM stacks has more memory bandwidth than entire datacenters had in 2015.
+
+But HBM has limits:
+
+**Capacity**: Each HBM4 stack tops out around 36GB. Even with 8 stacks, you're looking at ~288GB maximum. A single Llama 3.1 405B model in FP16 needs 810GB just for weights.
+
+**Cost**: HBM consumes roughly 3x the wafer area per gigabyte compared to standard DRAM. The 3D stacking, TSV processing, and advanced packaging add more cost. HBM4 is expected to carry a 20% price premium over HBM3E.
+
+**Thermal density**: Stacking 16 DRAM dies creates a concentrated heat source sitting millimeters from an already-hot GPU. Thermal management is becoming the limiting factor.
+
+**The Parkinson dynamic**: Every time HBM capacity increases, model architects immediately consume it. The 192GB on Blackwell seemed luxurious until reasoning models with massive KV caches arrived. We're running on a treadmill.
+
+## HBF: The NAND Insurgency
+
+High Bandwidth Flash takes a different approach entirely. Instead of making DRAM faster, it asks: what if we made NAND flash act like DRAM?
+
+The physics favor this bet. NAND flash stores bits in floating-gate transistors—no capacitor refresh needed, dramatically higher density possible. SK hynix is shipping 321-layer 3D NAND; a single die holds 2TB. Stack 16 of those with TSVs and you're looking at potential capacities that dwarf HBM.
+
+Sandisk's first-generation HBF spec:
+- 1.6 TB/s read bandwidth
+- 512GB per 16-die stack  
+- Same physical footprint as HBM4
+- Similar cost per stack
+
+The crucial benchmark: Sandisk ran simulations comparing HBF to (hypothetically unlimited) HBM on Llama 3.1 405B inference. The performance difference was 2.2%. 
+
+That's not a typo. NAND-based memory came within 2.2% of DRAM on an actual AI workload.
+
+## The Catch (There's Always a Catch)
+
+HBF has a fundamental asymmetry: reads are fast, writes are slow and wear out the cells.
+
+NAND flash has a write endurance of roughly 100,000 cycles per cell. For inference workloads—where you're reading model weights repeatedly but rarely writing—this is fine. For training, where gradients flow backward through the entire model and update every parameter, it's a non-starter.
+
+This creates an interesting market segmentation:
+
+| | HBM | HBF |
+|---|---|---|
+| **Strength** | Symmetric R/W, lowest latency | Massive capacity, cost-efficient |
+| **Weakness** | Capacity-limited, expensive | Write endurance, higher latency |
+| **Ideal for** | Training, latency-critical inference | Large model inference, edge deployment |
+
+## The Hybrid Future
+
+The most likely architecture isn't HBM *or* HBF—it's both.
+
+Professor Joungho Kim at KAIST (the "father of HBM") proposed an architecture where 100GB of HBM acts as a caching layer in front of 1TB of HBF. Hot data (attention KV cache, frequently-accessed layers) lives in HBM. Cold data (rarely-touched model weights, long context) lives in HBF.
+
+This mirrors the traditional memory hierarchy (cache → DRAM → SSD) but compressed onto a single interposer, with bandwidths that make the old hierarchy look quaint.
+
+For reasoning models that "think" for extended periods, accumulating massive KV caches, this hybrid approach could be transformative. You could maintain context windows of millions of tokens—currently impossible—by gracefully spilling to HBF.
+
+## Why This Matters Beyond AI
+
+The HBM/HBF split has implications for any memory-bound workload:
+
+**Blockchain state**: Ethereum's Merkle Patricia Trie is a memory-bound nightmare of pointer-chasing. An HBF-backed full node could store the entire state in high-bandwidth memory rather than on NVMe SSDs.
+
+**Scientific simulation**: Climate models, molecular dynamics, CFD—all memory-bound. HBF could enable problem sizes currently reserved for supercomputers.
+
+**Edge AI**: The real unlock might be at the edge. HBF's capacity-per-watt advantage could put 70B parameter models on devices that currently struggle with 7B.
+
+## The Timeline
+
+- **Now (2025-2026)**: HBM4 production ramp. HBF samples from Sandisk (2H 2026).
+- **2027-2028**: First AI inference devices with HBF. Likely hybrid HBM+HBF architectures.
+- **2030+**: If Professor Kim's predictions hold, HBF capacity advantages compound. HBM remains essential for training and latency-critical paths.
+- **~2038**: Kim predicts HBF market could surpass HBM.
+
+## The Deeper Pattern
+
+What fascinates me about this moment is the divergence itself.
+
+For 50 years, the memory hierarchy was a single stack: registers → cache → DRAM → disk. Faster always meant smaller. Bigger always meant slower. We optimized one axis.
+
+Now we're forking. HBM optimizes for bandwidth and latency at the cost of capacity and cost. HBF optimizes for capacity and cost at the cost of write performance. Neither dominates; each carves out a niche.
+
+This feels like the right response to a world where workloads have diverged. Training and inference have different memory access patterns. So do batch processing and real-time serving. One memory architecture can't optimize for all of them.
+
+The memory wall isn't going away. But we're building more doors through it.
+
+---
+
+*The companies racing to dominate this space: SK hynix (HBM market leader, HBF standardization partner), Samsung (vertical integration play—DRAM, foundry, and packaging under one roof), Sandisk (HBF pioneer, backed by David Patterson and Raja Koduri on their technical advisory board), and Micron (HBM revenue expected to exceed $8B in 2025). The real constraint isn't technology—it's advanced packaging capacity. CoWoS and EMIB lines are booked solid through 2026.*
