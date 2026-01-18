@@ -12,7 +12,7 @@ This is my `/nownownow` page, inspired by [Derek Sivers' /now page movement](htt
 ## Work
 - **Primary Focus**: Getting a Job
 - **Learning**: About computation
-- **Building**: The Singularity
+- **Building**: Post Von Neumann Computer Architecture
 
 ## Personal
 - **Reading**: The Republic by Plato
