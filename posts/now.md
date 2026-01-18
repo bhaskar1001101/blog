@@ -10,18 +10,18 @@ date: 2026-01-18
 This is my `/nownownow` page, inspired by [Derek Sivers' /now page movement](https://nownownow.com/).
 
 ## Work
-- **Primary Focus**: [project name]
-- **Learning**: [topic]
-- **Building**: [specific tool/framework/application]
+- **Primary Focus**: Getting a Job
+- **Learning**: About computation
+- **Building**: The Singularity
 
 ## Personal
-- **Reading**: [book title]
-- **Side Projects**: [description]
-- **Health**: [exercise routine, habits, etc.]
+- **Reading**: The Republic by Plato
+- **Side Projects**: SHA256 on FPGA
+- **Health**: Drinking enough water every day
 
 ## Interests
-- **Exploring**: [new interest/hobby]
-- **Thinking About**: [philosophical/technical topic]
+- **Exploring**: The Singularity
+- **Thinking About**: The Future of Human Civilization
 
 ---
 
