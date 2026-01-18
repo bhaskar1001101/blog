@@ -1,12 +1,9 @@
 ---
-title: Hello World
-date: 2024-01-01
+title: yellow world
+date: 2026-01-18
 type: musing
 ---
 
-# Hello World
+# yellow world
 
 This is a **local** markdown post.
-
-* It has a list
-* And some logic
