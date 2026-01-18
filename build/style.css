@@ -197,6 +197,34 @@ h1, h2, h3, h4 {
   margin-bottom: 15px;
 }
 
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.post-content th,
+.post-content td {
+  border: 1px solid var(--border-color);
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.post-content th {
+  background-color: #f5f5f5;
+  font-weight: 500;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.post-content tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.post-content tr:hover {
+  background-color: #f0f0f0;
+}
+
 .post-content code {
   background-color: #eef;
   border: 1px solid var(--border-color);
