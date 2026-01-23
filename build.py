@@ -93,6 +93,7 @@ def render_footer():
     """Render site footer."""
     return f"""<footer>
         <p>&copy; {datetime.now().year} {SITE_NAME}</p>
+        <p> i seek perpetual renaissance </p>
         <div class="footer-links">
             <a href="https://github.com/bhaskar1001101" target="_blank">GitHub</a>
             <a href="https://twitter.com/zyzyzynn" target="_blank">Twitter</a>
