@@ -228,7 +228,9 @@ def load_posts():
             "date": date,
             "type": post_type,
             "slug": slugify(title) if not is_now else "nownownow",
-            "html_content": markdown.markdown(body, extensions=["tables"]),
+            "html_content": markdown.markdown(
+                body, extensions=["tables", "fenced_code"]
+            ),
             "source_file": md_file,
             "is_now": is_now,
         }

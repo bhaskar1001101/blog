@@ -240,11 +240,14 @@ h1, h2, h3, h4 {
   padding: 8px 12px;
   overflow-x: auto;
   margin-bottom: 15px;
+  white-space: pre;
 }
 
 .post-content pre code {
   border: none;
   padding: 0;
+  white-space: pre;
+  word-wrap: normal;
 }
 
 .post-content blockquote {
