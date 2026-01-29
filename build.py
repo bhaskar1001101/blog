@@ -80,7 +80,7 @@ def render_header(title="", prefix=""):
                 {nav_left}
             </div>
             <div class="nav-center">
-                i am the singularity
+                i am a singularity
             </div>
             <div class="nav-right">
                 {nav_right}
