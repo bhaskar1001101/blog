@@ -13,7 +13,7 @@
                 <a href="../index.html">blog</a>
             </div>
             <div class="nav-center">
-                i am the singularity
+                i am a singularity
             </div>
             <div class="nav-right">
                 <a href="../nownownow.html">nownownow</a>
@@ -29,7 +29,7 @@
         </header>
         <div class="post-content">
             <h2>Part 1: The Physics of Memory</h2>
-<h3>Why DRAM is DRAM</h3>
+<h3>What is DRAM</h3>
 <p>Every DRAM cell is fundamentally a capacitor and a transistor. That's it. The capacitor stores charge (1 or 0), the transistor gates access to it.</p>
 <pre><code class="language-text">        Word Line (row select)
             │
@@ -46,7 +46,7 @@ Line    │       │
 - Gets worse as capacitors shrink (smaller = leakier)</p>
 <p>The capacitor also limits density. You need physical space for that capacitor, and it needs to hold enough charge to be reliably sensed. This is why DRAM density scaling has slowed dramatically—we're hitting fundamental physics limits on how small you can make a capacitor that still works.</p>
 <p><strong>Key insight</strong>: DRAM is fast because capacitors charge/discharge quickly. But the capacitor is also the limiting factor for density and power.</p>
-<h3>Why NAND is NAND</h3>
+<h3>What is NAND?</h3>
 <p>NAND flash uses a completely different approach: <strong>floating-gate transistors</strong>.</p>
 <pre><code class="language-text">        Control Gate
             │
@@ -80,7 +80,6 @@ Line    │       │
 <p><strong>Asymmetric performance</strong>: Reads are much faster than writes, and erases are the slowest (must erase whole blocks).</p>
 </li>
 </ol>
-<h3>The Density Equation</h3>
 <p>Here's why NAND wins on density:</p>
 <p><strong>DRAM cell size</strong>: ~0.001-0.002 μm² per bit (at cutting-edge nodes)
 - Limited by capacitor minimum size
@@ -361,36 +360,6 @@ Line    │       │
 - Dormant expert weights sit in HBF (cold storage)
 - Active experts cached in HBM (hot storage)
 - Router decides which experts to activate, triggers HBF→HBM prefetch</p>
-<h3>Implications for Edge AI</h3>
-<p>Current edge AI constraints:
-- Smartphone: ~8-12GB shared DRAM, ~100 GB/s bandwidth
-- Laptop: ~16-64GB DRAM, ~100-200 GB/s bandwidth
-- Limited to ~7B parameter models realistically</p>
-<p>With HBF:
-- 512GB-1TB capacity in similar power envelope
-- &gt;1 TB/s bandwidth to local compute
-- 70B-400B parameter models on edge devices</p>
-<p>This changes what "edge" means. A phone with HBF could run models currently requiring datacenter hardware.</p>
-<h3>Implications for Ethereum</h3>
-<p>You mentioned Nimbus and the architecture sketch. Let me get specific:</p>
-<p><strong>Current Ethereum full node bottleneck</strong>: The Merkle Patricia Trie stores all account state. Every state access requires:
-1. Hash the key to get path
-2. Traverse trie nodes (typically 6-8 levels)
-3. Each level requires loading a node from storage
-4. Hash each node to verify integrity</p>
-<p>On NVMe SSD: ~50-100 μs per state access (with caching)
-On HBM: ~100-200 ns per state access
-On HBF: ~500-1000 ns per state access (estimated)</p>
-<p>That's a 50-100x improvement over SSD for HBF, 250-500x for HBM.</p>
-<p>With the hybrid architecture:
-- Hot state (recently accessed accounts, active contracts) in HBM
-- Full state in HBF
-- Trie traversal happens at memory speed, not storage speed</p>
-<p>This could enable:
-- Full archive nodes on consumer hardware
-- Real-time state analysis
-- Much faster sync times
-- New client architectures (your EL/CL split)</p>
 <hr />
 <h2>Part 7: The Manufacturing Roadmap</h2>
 <h3>HBM Evolution</h3>

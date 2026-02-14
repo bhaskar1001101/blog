@@ -7,7 +7,7 @@ type: rant
 
 ## Part 1: The Physics of Memory
 
-### Why DRAM is DRAM
+### What is DRAM
 
 Every DRAM cell is fundamentally a capacitor and a transistor. That's it. The capacitor stores charge (1 or 0), the transistor gates access to it.
 
@@ -31,7 +31,7 @@ The capacitor also limits density. You need physical space for that capacitor, a
 
 **Key insight**: DRAM is fast because capacitors charge/discharge quickly. But the capacitor is also the limiting factor for density and power.
 
-### Why NAND is NAND
+### What is NAND?
 
 NAND flash uses a completely different approach: **floating-gate transistors**.
 
@@ -65,8 +65,6 @@ To erase: You apply reverse high voltage, pulling electrons back out.
 4. **Write endurance**: Each write cycle degrades the tunnel oxide. After 1,000-100,000 cycles (depending on cell type), the oxide can't reliably trap electrons anymore.
 
 5. **Asymmetric performance**: Reads are much faster than writes, and erases are the slowest (must erase whole blocks).
-
-### The Density Equation
 
 Here's why NAND wins on density:
 
@@ -451,47 +449,6 @@ Mixture of Experts (MoE) is particularly interesting. In MoE, most experts are d
 - Dormant expert weights sit in HBF (cold storage)
 - Active experts cached in HBM (hot storage)
 - Router decides which experts to activate, triggers HBF→HBM prefetch
-
-### Implications for Edge AI
-
-Current edge AI constraints:
-- Smartphone: ~8-12GB shared DRAM, ~100 GB/s bandwidth
-- Laptop: ~16-64GB DRAM, ~100-200 GB/s bandwidth
-- Limited to ~7B parameter models realistically
-
-With HBF:
-- 512GB-1TB capacity in similar power envelope
-- >1 TB/s bandwidth to local compute
-- 70B-400B parameter models on edge devices
-
-This changes what "edge" means. A phone with HBF could run models currently requiring datacenter hardware.
-
-### Implications for Ethereum
-
-You mentioned Nimbus and the architecture sketch. Let me get specific:
-
-**Current Ethereum full node bottleneck**: The Merkle Patricia Trie stores all account state. Every state access requires:
-1. Hash the key to get path
-2. Traverse trie nodes (typically 6-8 levels)
-3. Each level requires loading a node from storage
-4. Hash each node to verify integrity
-
-On NVMe SSD: ~50-100 μs per state access (with caching)
-On HBM: ~100-200 ns per state access
-On HBF: ~500-1000 ns per state access (estimated)
-
-That's a 50-100x improvement over SSD for HBF, 250-500x for HBM.
-
-With the hybrid architecture:
-- Hot state (recently accessed accounts, active contracts) in HBM
-- Full state in HBF
-- Trie traversal happens at memory speed, not storage speed
-
-This could enable:
-- Full archive nodes on consumer hardware
-- Real-time state analysis
-- Much faster sync times
-- New client architectures (your EL/CL split)
 
 ---
 
