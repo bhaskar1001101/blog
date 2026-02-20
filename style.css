@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap');
+
 :root {
   --bg-color: #fdfdfd;
   --text-color: #111;
@@ -12,7 +14,7 @@
 }
 
 body {
-  font: 400 16px/1.5 "Times New Roman", Times, serif;
+  font: 400 16px/1.5 "Open Sans", sans-serif;
   color: var(--text-color);
   background-color: var(--bg-color);
   width: 100%;
@@ -63,11 +65,6 @@ header nav a {
   text-decoration: none;
 }
 
-header .nav-center {
-  font-weight: 500;
-  font-size: x-large;
-}
-
 header .nav-left a {
   margin-right: 40px;
   font-size: x-large;
@@ -84,7 +81,8 @@ main {
   width: 100%;
   max-width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 main > * {
@@ -94,6 +92,17 @@ main > * {
 
 h1, h2, h3, h4 {
   font-weight: 400;
+}
+
+.intro {
+  margin-bottom: 40px;
+  font-size: 18px;
+  font-family: "Times New Roman", Times, serif;
+  color: var(--text-color);
+}
+
+.intro p {
+  margin: 0;
 }
 
 .post-list {
@@ -296,10 +305,6 @@ footer {
     margin-right: 20px;
     margin-left: 20px;
   }
-
-  header .nav-center {
-    font-size: large;
-  }
 }
 
 @media (max-width: 800px) {
@@ -343,7 +348,6 @@ footer {
   }
 
   header .nav-left,
-  header .nav-center,
   header .nav-right {
     width: 100%;
     text-align: center;
@@ -353,10 +357,6 @@ footer {
   header .nav-right a {
     margin: 5px 0;
     display: block;
-  }
-
-  header .nav-center {
-    margin: 5px 0;
   }
 
   main {
@@ -440,9 +440,5 @@ footer {
 
   .post-link {
     font-size: 18px;
-  }
-
-  header .nav-center {
-    font-size: medium;
   }
 }

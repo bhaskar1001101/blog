@@ -59,7 +59,7 @@ def slugify(title):
 def render_header(title="", prefix=""):
     """Render site header."""
     nav_items_left = [
-        (f"{prefix}index.html", "blog"),
+        (f"{prefix}index.html", "bhaskar1001101"),
     ]
 
     nav_items_right = [
@@ -79,9 +79,6 @@ def render_header(title="", prefix=""):
             <div class="nav-left">
                 {nav_left}
             </div>
-            <div class="nav-center">
-                i am a singularity
-            </div>
             <div class="nav-right">
                 {nav_right}
             </div>
@@ -93,8 +90,9 @@ def render_footer():
     """Render site footer."""
     return f"""<footer>
         <p>&copy; {datetime.now().year} {SITE_NAME}</p>
-        <p> i seek perpetual renaissance </p>
+        <p> I seek perpetual renaissance </p>
         <div class="footer-links">
+            <a href="mailto:bhaskarmetiya@gmail.com">Email</a>
             <a href="https://github.com/bhaskar1001101" target="_blank">GitHub</a>
             <a href="https://twitter.com/zyzyzynn" target="_blank">Twitter</a>
         </div>
@@ -151,7 +149,10 @@ def render_post_list(posts):
         else:
             musing_items.append(item)
 
-    return f"""<div class="post-list-container">
+    return f"""<div class="intro">
+        <p>I'm Bhaskar Metiya, systems programmer with a deep interest in building at the intersection of privacy, finance and technology.</p>
+    </div>
+    <div class="post-list-container">
         <div class="post-list-column">
             <h2 class="post-list-heading">Rants</h2>
             <ul class="post-list">
